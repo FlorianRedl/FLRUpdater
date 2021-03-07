@@ -15,10 +15,10 @@ namespace FLRUpdater
         public static string Logo { get; set; }
 
 
-        
+
 
         /// <summary>
-        /// 
+        /// Checking for a new version and display the StartUpWindow if update is available.
         /// </summary>
         /// <param name="xml"></param>
         public void OnStartUp(string xml)
