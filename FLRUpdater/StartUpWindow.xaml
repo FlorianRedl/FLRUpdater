@@ -27,7 +27,7 @@
             <Border CornerRadius="10" Background="#3D5166">
                 <Grid>
                     <StackPanel>
-                        <Image x:Name="imgLogo" Width="300" Height="100" Stretch="Uniform" Margin="20" RenderOptions.BitmapScalingMode="HighQuality">
+                        <Image Source="C:\Users\Florian\source\repos\FLRUpdater\Logo\flr-studios Logo.png" x:Name="imgLogo" Width="300" Height="100" Stretch="Uniform" Margin="20" RenderOptions.BitmapScalingMode="HighQuality">
                         </Image>
                     </StackPanel>
                 

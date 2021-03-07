@@ -20,11 +20,14 @@ namespace FLRUpdater
     /// </summary>
     public partial class StartUpWindow : Window
     {
+        
 
         public StartUpWindow()
         {
-            imgLogo.Source = new BitmapImage(new Uri(Updater.Logo));
-            InitializeComponent();
+            
+           //imgLogo.Source = new BitmapImage(new Uri(@"C:\Users\Florian\source\repos\FLRUpdater\Logo\flr-studios Logo.png"));
+
+           InitializeComponent();
         }
         
     }
