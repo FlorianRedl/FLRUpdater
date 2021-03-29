@@ -9,6 +9,7 @@ using System.Xml;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace FLRUpdater
 {
@@ -49,25 +50,24 @@ namespace FLRUpdater
             //wenn verfügbar updaten und neu starten 
         }
 
+      
 
         private static bool CheckForUpdate(string versionDB)
         {
-            versionDB args;
-            WebClient webClient = new WebClient();
+            VersionData versionData;
 
+            WebClient webClient = new WebClient();
             string xml = webClient.DownloadString(versionDB);
 
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(versionDB));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(VersionData));
             XmlTextReader xmlTextReader = new XmlTextReader(new StringReader(xml)) { XmlResolver = null };
-            args = (versionDB)xmlSerializer.Deserialize(xmlTextReader);
+            versionData = (VersionData)xmlSerializer.Deserialize(xmlTextReader);
 
-            Assembly mainAssembly = Assembly.GetExecutingAssembly();
-            Console.WriteLine(args.CurrentVersion);
+            string mainAssembly = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
 
-            args.InstalledVersion = InstalledVersion != null ? InstalledVersion : mainAssembly.GetName().Version;
-            args.IsUpdateAvailable = new Version(args.CurrentVersion) > args.InstalledVersion;
+            versionData.InstalledVersion = InstalledVersion != null ? InstalledVersion : new Version(mainAssembly);
 
-            if (args.IsUpdateAvailable)
+            if (versionData.IsUpdateAvailable)
             {
                 return true;
             }
@@ -77,36 +77,6 @@ namespace FLRUpdater
             }
             
         }
-        [XmlRoot("app")]
-        public class versionDB : EventArgs
-        {
-            /// <summary>
-            ///     If there is an error while checking for update then this property won't be null.
-            /// </summary>
-            [XmlIgnore]
-            public Exception Error { get; set; }
-            /// <summary>
-            ///     If new update is available then returns true otherwise false.
-            /// </summary>
-            public bool IsUpdateAvailable { get; set; }
-            /// <summary>
-            ///    
-            /// </summary>
-            [XmlElement("name")]
-            public string Name { get; set; }
-            /// <summary>
-            ///     Returns newest version of the application available to download.
-            /// </summary>
-            [XmlElement("version")]
-            public string CurrentVersion { get; set; }
 
-            /// <summary>
-            ///     Returns version of the application currently installed on the user's PC.
-            /// </summary>
-            public Version InstalledVersion { get; set; }
-
-           
-
-        }
     }
 }
